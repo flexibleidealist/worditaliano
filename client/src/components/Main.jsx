@@ -4,7 +4,8 @@ import { Header } from './Header.jsx';
 
 export const Main = ({ words }) => {
   const [word, setWord] = useState('');
-  const [guess, setGuess] = useState('');
+  const [guesses, setGuesses] = useState([]);
+  const [currentGuess, setCurrentGuess] = useState('');
   const [round, setRound] = useState(0);
 
   const handleSubmit = e => {
@@ -28,7 +29,7 @@ export const Main = ({ words }) => {
   }, [words]);
   return (
     <div className="main">
-      <Board guess={guess} />
+      <Board guess={guessArray} />
       <form onSubmit={handleSubmit}>
         <label htmlFor="guess">indovina:</label>
         <input type="text" value={guess} name={guess} onChange={handleChange} />
