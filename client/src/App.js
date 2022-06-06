@@ -11,6 +11,11 @@ function App() {
   const [guesses, setGuesses] = useState([]);
   const [currentGuess, setCurrentGuess] = useState('');
   const checkGuess = () => {
+    if (!words.includes(currentGuess)) {
+      alert('word not found');
+      return;
+    }
+
     const guessLetters = currentGuess.split('');
     const wordLetters = word.split('');
     for (let i = 0; i < guessLetters.length; i++) {
