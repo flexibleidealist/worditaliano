@@ -23,12 +23,13 @@ function App() {
   const checkGuess = () => {
     if (!words.includes(currentGuess)) {
       alert('word not found');
-      return;
     } else {
       setGuesses([...guesses, currentGuess]);
     }
     setCurrentGuess('');
-    if (guesses.includes(word)) setShowModal(true);
+    setTimeout(() => {
+      if (guesses.includes(word)) setShowModal(true);
+    }, 200);
   };
   useLayoutEffect(() => {
     fetch(raw)
