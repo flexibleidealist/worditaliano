@@ -6,8 +6,12 @@ export const Footer = ({
   currentGuess,
   setCurrentGuess,
   checkGuess,
+  setGuesses,
+  setRound,
 }) => {
   const startGame = () => {
+    setRound(0);
+    setGuesses([]);
     setWord(words[Math.floor(Math.random() * words.length)]);
   };
   const handleSubmit = e => {

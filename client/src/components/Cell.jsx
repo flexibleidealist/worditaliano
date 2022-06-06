@@ -4,7 +4,7 @@ export const Cell = ({ letter }) => {
 
   return (
     <div className="cell" style={{ backgroundColor: color }}>
-      {letter}
+      <h3>{letter}</h3>
     </div>
   );
 };

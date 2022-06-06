@@ -10,10 +10,14 @@ function App() {
   const [word, setWord] = useState('');
   const [guesses, setGuesses] = useState([]);
   const [currentGuess, setCurrentGuess] = useState('');
+  const [round, setRound] = useState(0);
   const checkGuess = () => {
     if (!words.includes(currentGuess)) {
       alert('word not found');
       return;
+    } else {
+      setGuesses([...guesses, currentGuess]);
+      setRound(round + 1);
     }
 
     const guessLetters = currentGuess.split('');
@@ -48,13 +52,15 @@ function App() {
   return (
     <div className="app">
       <Header />
-      <Board guesses={guesses} currentGuess={currentGuess} />
+      <Board guesses={guesses} currentGuess={currentGuess} round={round} />
       <Footer
         words={words}
         setWord={setWord}
         currentGuess={currentGuess}
         setCurrentGuess={setCurrentGuess}
         checkGuess={checkGuess}
+        setGuesses={setGuesses}
+        setRound={setRound}
       />
     </div>
   );
