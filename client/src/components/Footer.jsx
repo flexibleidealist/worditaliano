@@ -1,25 +1,18 @@
 import { useState } from 'react';
 
 export const Footer = ({
-  words,
-  setWord,
   currentGuess,
   setCurrentGuess,
   checkGuess,
-  setGuesses,
   round,
   setRound,
+  startGame,
 }) => {
-  const startGame = () => {
-    setRound(0);
-    setGuesses([]);
-    setWord(words[Math.floor(Math.random() * words.length)]);
-    setCurrentGuess('');
-  };
   const handleSubmit = e => {
     e.preventDefault();
     if (currentGuess.length === 5) checkGuess();
     setRound(round + 1);
+    setCurrentGuess('');
   };
   const handleChange = e => {
     setCurrentGuess(e.target.value);

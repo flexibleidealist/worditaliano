@@ -2,6 +2,7 @@ import { useState, useLayoutEffect } from 'react';
 import { Header } from './components/Header.jsx';
 import { Board } from './components/Board.jsx';
 import { Footer } from './components/Footer.jsx';
+import { Modal } from './components/Modal.jsx';
 import raw from './wordlist.txt';
 import './App.css';
 
@@ -11,6 +12,14 @@ function App() {
   const [guesses, setGuesses] = useState([]);
   const [currentGuess, setCurrentGuess] = useState('');
   const [round, setRound] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const startGame = () => {
+    setRound(0);
+    setShowModal(false);
+    setGuesses([]);
+    setWord(words[Math.floor(Math.random() * words.length)]);
+    setCurrentGuess('');
+  };
   const checkGuess = () => {
     if (!words.includes(currentGuess)) {
       alert('word not found');
@@ -18,23 +27,8 @@ function App() {
     } else {
       setGuesses([...guesses, currentGuess]);
     }
-
-    const guessLetters = currentGuess.split('');
-    const wordLetters = word.split('');
-    for (let i = 0; i < guessLetters.length; i++) {
-      if (!wordLetters.includes(guessLetters[i])) {
-        console.log(`gray at ${i}`);
-      } else if (
-        wordLetters.includes(currentGuess[i]) &&
-        word[i] !== currentGuess[i]
-      ) {
-        wordLetters.splice(wordLetters.indexOf(currentGuess[i]), 1, '*');
-        console.log(`yellow at ${i}`);
-      } else if (word[i] === currentGuess[i]) {
-        wordLetters.splice(wordLetters.indexOf(currentGuess[i]), 1, '*');
-        console.log(`green at ${i}`);
-      }
-    }
+    setCurrentGuess('');
+    if (guesses.includes(word)) setShowModal(true);
   };
   useLayoutEffect(() => {
     fetch(raw)
@@ -50,7 +44,13 @@ function App() {
   return (
     <div className="app">
       <Header />
-      <Board guesses={guesses} currentGuess={currentGuess} round={round} />
+      {showModal && <Modal startGame={startGame} />}
+      <Board
+        guesses={guesses}
+        currentGuess={currentGuess}
+        round={round}
+        word={word}
+      />
       <Footer
         words={words}
         setWord={setWord}
@@ -60,6 +60,7 @@ function App() {
         setGuesses={setGuesses}
         round={round}
         setRound={setRound}
+        startGame={startGame}
       />
     </div>
   );
