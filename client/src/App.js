@@ -17,7 +17,6 @@ function App() {
       return;
     } else {
       setGuesses([...guesses, currentGuess]);
-      setRound(round + 1);
     }
 
     const guessLetters = currentGuess.split('');
@@ -48,7 +47,6 @@ function App() {
         )
       );
   }, []);
-  console.log(word);
   return (
     <div className="app">
       <Header />
@@ -60,6 +58,7 @@ function App() {
         setCurrentGuess={setCurrentGuess}
         checkGuess={checkGuess}
         setGuesses={setGuesses}
+        round={round}
         setRound={setRound}
       />
     </div>

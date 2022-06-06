@@ -6,12 +6,12 @@ export const Board = ({ guesses, currentGuess, round }) => {
   for (let i = 0; i < rounds; i++) {
     rows.push(
       <Row
-        key={i}
-        id={`row${i}`}
+        key={i + 1}
+        id={`row${i + 1}`}
         guesses={guesses}
         currentGuess={currentGuess}
         round={round}
-        rowNumber={i}
+        rowNumber={i + 1}
       />
     );
   }
