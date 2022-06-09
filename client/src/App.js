@@ -12,25 +12,38 @@ function App() {
   const [guesses, setGuesses] = useState([]);
   const [currentGuess, setCurrentGuess] = useState('');
   const [round, setRound] = useState(0);
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState('none');
   const startGame = () => {
     setRound(0);
-    setShowModal(false);
+    setShowModal('none');
     setGuesses([]);
     setWord(words[Math.floor(Math.random() * words.length)]);
     setCurrentGuess('');
   };
   const checkGuess = () => {
     if (!words.includes(currentGuess)) {
-      alert('word not found');
+      setShowModal('not found');
     } else {
       setGuesses([...guesses, currentGuess]);
     }
     setCurrentGuess('');
     setTimeout(() => {
-      if (guesses.includes(word)) setShowModal(true);
-    }, 200);
+      if (guesses.includes(word)) setShowModal('winner');
+    }, 250);
   };
+  let modal;
+  if (showModal === 'not found')
+    modal = (
+      <Modal setShowModal={setShowModal} message={'parola non trovata'} />
+    );
+  else if (showModal === 'winner')
+    modal = (
+      <Modal
+        setShowModal={setShowModal}
+        message={'ottimo lavoro!'}
+        startGame={startGame}
+      />
+    );
   useLayoutEffect(() => {
     fetch(raw)
       .then(res => res.text())
@@ -45,12 +58,13 @@ function App() {
   return (
     <div className="app">
       <Header />
-      {showModal && <Modal startGame={startGame} />}
+      {showModal === 'none' ? null : modal}
       <Board
         guesses={guesses}
         currentGuess={currentGuess}
         round={round}
         word={word}
+        setShowModal={setShowModal}
       />
       <Footer
         words={words}

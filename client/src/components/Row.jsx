@@ -1,9 +1,20 @@
 import { useState, useEffect } from 'react';
 import { Cell } from './Cell.jsx';
 
-export const Row = ({ round, rowNumber, currentGuess, guesses, word }) => {
+export const Row = ({
+  round,
+  rowNumber,
+  currentGuess,
+  guesses,
+  word,
+  setShowModal,
+}) => {
   const [cells, setCells] = useState([]);
-
+  const checkForWinner = () => {
+    if (word === guesses[guesses.length - 1]) {
+      setShowModal('winner');
+    }
+  };
   useEffect(() => {
     const guessLetters = guesses.length
       ? guesses[rowNumber - 1]?.split('')
@@ -52,6 +63,7 @@ export const Row = ({ round, rowNumber, currentGuess, guesses, word }) => {
       }
       setCells(currentCells);
     }
+    checkForWinner();
   }, [currentGuess, round]);
 
   return (

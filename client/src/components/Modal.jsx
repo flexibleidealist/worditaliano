@@ -1,8 +1,12 @@
-export const Modal = ({ startGame }) => {
+export const Modal = ({ startGame, message }) => {
   return (
     <div className="modal">
-      <h1>ottimo lavoro!</h1>
-      <button onClick={startGame}>play again</button>
+      <h1>{message}</h1>
+      {message === 'ottimo lavoro' ? (
+        <button onClick={startGame}>play again</button>
+      ) : (
+        <button>back</button>
+      )}
     </div>
   );
 };
